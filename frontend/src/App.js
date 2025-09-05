@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Pacientes from "./pages/Pacientes";
 import Laudos from "./pages/Laudos";
+import "./App.css";
 
 function App() {
   return (
     <Router>
-      <nav style={{ marginBottom: "20px" }}>
-        <Link to="/pacientes" style={{ marginRight: "10px" }}>Pacientes</Link>
-        <Link to="/laudos">Laudos</Link>
+      <nav className = "nav">
+        <Link to="/pacientes" className="link">Pacientes</Link>
+        <Link to="/laudos" className="link">Laudos</Link>
       </nav>
 
       <Routes>
