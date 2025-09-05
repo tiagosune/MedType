@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Sigmar&display=swap');
+
 .App {
   text-align: center;
 }
@@ -35,4 +37,20 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.nav {
+    font-family: "Sigmar", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 25px;
+    margin-bottom: 22px;
+}
+.link{
+    margin-right: 20px;
+    text-decoration: none;
+    color: forestgreen;
+}
+.link:hover {
+    color: blue;
 }
