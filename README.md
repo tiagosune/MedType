@@ -27,6 +27,6 @@ Este projeto também tem como objetivo:
 | Camada      | Tecnologias                             |
 | ----------- | --------------------------------------- |
 | Backend     | Java, Spring Boot, JPA, PostgreSQL |
-| Frontend    | React, HTML, CSS            |
+| Frontend    | React, HTML, Material UI            |
 | Ferramentas | Maven, npm, Git                         |
 | Comunicação | API REST                                |
