@@ -2,11 +2,10 @@ package com.medtype.medtype.controller;
 
 import com.medtype.medtype.dto.LaudoDTO;
 import com.medtype.medtype.model.Laudo;
-import com.medtype.medtype.model.Paciente;
-import com.medtype.medtype.model.Usuario;
 import com.medtype.medtype.repository.LaudoRepository;
 import com.medtype.medtype.repository.PacienteRepository;
 import com.medtype.medtype.repository.UsuarioRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -39,11 +38,9 @@ public class LaudoController {
     }
 
     @PostMapping
-    public Laudo criar(@RequestBody LaudoDTO dto) {
-        Paciente paciente = pacienteRepo.findById(dto.getPacienteId())
-                .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));
-        Usuario autor = usuarioRepo.findById(dto.getAutorId())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    public Laudo criar(@RequestBody @Valid LaudoDTO dto) {
+        var paciente = pacienteRepo.findById(dto.getPacienteId()).orElseThrow();
+        var autor = usuarioRepo.findById(dto.getAutorId()).orElseThrow();
 
         Laudo laudo = new Laudo();
         laudo.setPaciente(paciente);
@@ -56,13 +53,11 @@ public class LaudoController {
     }
 
     @PutMapping("/{id}")
-    public Laudo atualizar(@PathVariable Long id, @RequestBody LaudoDTO dto) {
+    public Laudo atualizar(@PathVariable Long id, @RequestBody @Valid LaudoDTO dto) {
         Laudo existente = laudoRepo.findById(id).orElseThrow();
 
-        Paciente paciente = pacienteRepo.findById(dto.getPacienteId())
-                .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));
-        Usuario autor = usuarioRepo.findById(dto.getAutorId())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        var paciente = pacienteRepo.findById(dto.getPacienteId()).orElseThrow();
+        var autor = usuarioRepo.findById(dto.getAutorId()).orElseThrow();
 
         existente.setPaciente(paciente);
         existente.setAutor(autor);
@@ -72,6 +67,7 @@ public class LaudoController {
 
         return laudoRepo.save(existente);
     }
+
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
