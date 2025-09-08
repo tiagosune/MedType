@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/modelos-laudo")
+@RequestMapping("/modelos")
+@CrossOrigin(origins = "http://localhost:3000") // libera acesso para frontend
 public class ModeloLaudoController {
 
     private final ModeloLaudoRepository modeloRepo;
