@@ -38,28 +38,22 @@ function Modelos() {
 
     const carregarModelos = () => api.get("/modelos").then(res => setModelos(res.data));
 
-    const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+    const handleChange = (e) => {
+        setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!form.titulo.trim() && !editando) {
-            setSnackbar({ open: true, message: "O título não pode ficar vazio!", severity: "error" });
-            return;
-        }
-
         try {
-            if (editando && form.id) {
-                // Atualiza modelo existente
+            if (editando && form.id != null) {
                 await api.put(`/modelos/${form.id}`, {
                     titulo: form.titulo,
                     conteudo: form.conteudo
                 });
                 setSnackbar({ open: true, message: "Modelo atualizado com sucesso!", severity: "success" });
             } else {
-                // Cria novo modelo
                 await api.post("/modelos", {
-                    titulo: form.titulo || "Sem título",
+                    titulo: form.titulo,
                     conteudo: form.conteudo
                 });
                 setSnackbar({ open: true, message: "Modelo cadastrado com sucesso!", severity: "success" });
@@ -69,7 +63,6 @@ function Modelos() {
             carregarModelos();
         } catch (error) {
             setSnackbar({ open: true, message: "Erro ao salvar modelo", severity: "error" });
-            console.error(error);
         }
     };
 
@@ -77,7 +70,7 @@ function Modelos() {
         setForm({
             id: modelo.id,
             titulo: modelo.titulo || "",
-            conteudo: modelo.conteudo || ""
+            conteudo: modelo.conteudo || "",
         });
         setEditando(true);
     };
@@ -114,7 +107,6 @@ function Modelos() {
         <Container>
             <Typography variant="h4" gutterBottom>Modelos</Typography>
 
-            {/* Formulário */}
             <Paper sx={{ p: 3, mb: 4 }}>
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                     <TextField
@@ -127,7 +119,10 @@ function Modelos() {
                     <CKEditor
                         editor={ClassicEditor}
                         data={form.conteudo}
-                        onChange={(event, editor) => setForm({ ...form, conteudo: editor.getData() })}
+                        onChange={(event, editor) => {
+                            const data = editor.getData();
+                            setForm(prev => ({ ...prev, conteudo: data }));
+                        }}
                     />
                     <div>
                         <Button type="submit" variant="contained" color="primary">
@@ -142,14 +137,15 @@ function Modelos() {
                 </form>
             </Paper>
 
-            {/* Lista de Modelos */}
             <Grid container spacing={3}>
                 {modelos.map(modelo => (
                     <Grid item xs={12} sm={6} md={4} key={modelo.id}>
                         <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <Typography variant="h6" noWrap>{modelo.titulo}</Typography>
-                                <Typography variant="body2" sx={{ mt: 1 }}>{stripHtml(modelo.conteudo).substring(0, 100)}...</Typography>
+                                <Typography variant="body2" sx={{ mt: 1 }}>
+                                    {stripHtml(modelo.conteudo).substring(0, 100)}...
+                                </Typography>
                             </CardContent>
                             <CardActions sx={{ mt: "auto", justifyContent: "flex-end" }}>
                                 <Button size="small" onClick={() => editarModelo(modelo)}>Editar</Button>
@@ -161,7 +157,6 @@ function Modelos() {
                 ))}
             </Grid>
 
-            {/* ConfirmDialog e Snackbar */}
             <ConfirmDialog
                 open={confirmOpen}
                 title="Excluir modelo"

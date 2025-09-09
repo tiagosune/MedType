@@ -34,11 +34,16 @@ public class ModeloLaudoController {
 
     @PutMapping("/{id}")
     public ModeloLaudo atualizar(@PathVariable Long id, @RequestBody ModeloLaudo modelo) {
-        ModeloLaudo existente = modeloRepo.findById(id).orElseThrow();
+        ModeloLaudo existente = modeloRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Modelo não encontrado"));
+
+        // Só atualiza os campos editáveis
         existente.setTitulo(modelo.getTitulo());
         existente.setConteudo(modelo.getConteudo());
+
         return modeloRepo.save(existente);
     }
+
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
