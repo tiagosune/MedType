@@ -1,3 +1,4 @@
+// src/main/java/com/medtype/medtype/model/ModeloLaudo.java
 package com.medtype.medtype.model;
 
 import jakarta.persistence.*;
@@ -11,9 +12,8 @@ public class ModeloLaudo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String titulo;
+    private String titulo; // Nome do modelo (ex.: "Ultrassom Abdômen", "Laudo Obstétrico")
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String conteudo; // texto padrão do modelo
+    @Column(columnDefinition = "TEXT")
+    private String conteudo; // Texto padrão do modelo
 }

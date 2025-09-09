@@ -5,6 +5,7 @@ import com.medtype.medtype.model.Usuario;
 import com.medtype.medtype.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -14,6 +15,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public List<Usuario> listar() {
@@ -29,9 +33,8 @@ public class UsuarioController {
     public Usuario criar(@RequestBody @Valid UsuarioDTO dto) {
         Usuario usuario = new Usuario();
         usuario.setUsername(dto.getUsername());
-        usuario.setPassword(dto.getPassword()); // futuramente criptografar
+        usuario.setPassword(passwordEncoder.encode(dto.getPassword())); // usar a instância injetada
         usuario.setRole(dto.getRole() != null ? dto.getRole() : "ROLE_USER");
-
         return usuarioRepository.save(usuario);
     }
 
@@ -40,16 +43,18 @@ public class UsuarioController {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow();
 
         usuario.setUsername(dto.getUsername());
-        usuario.setPassword(dto.getPassword());
-        usuario.setRole(dto.getRole());
 
+        // Só atualiza e criptografa a senha se o campo não estiver vazio
+        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
+            usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
+
+        usuario.setRole(dto.getRole());
         return usuarioRepository.save(usuario);
     }
 
     @DeleteMapping("/{id}")
-    public void deletar (@PathVariable Long id){
+    public void deletar(@PathVariable Long id) {
         usuarioRepository.deleteById(id);
     }
-
-
 }

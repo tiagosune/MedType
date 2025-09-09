@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/modelos-laudo")
+@RequestMapping("/modelos")
+@CrossOrigin(origins = "http://localhost:3000") // libera acesso para frontend
 public class ModeloLaudoController {
 
     private final ModeloLaudoRepository modeloRepo;
@@ -33,11 +34,16 @@ public class ModeloLaudoController {
 
     @PutMapping("/{id}")
     public ModeloLaudo atualizar(@PathVariable Long id, @RequestBody ModeloLaudo modelo) {
-        ModeloLaudo existente = modeloRepo.findById(id).orElseThrow();
+        ModeloLaudo existente = modeloRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Modelo não encontrado"));
+
+        // Só atualiza os campos editáveis
         existente.setTitulo(modelo.getTitulo());
         existente.setConteudo(modelo.getConteudo());
+
         return modeloRepo.save(existente);
     }
+
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
