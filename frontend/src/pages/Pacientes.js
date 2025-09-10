@@ -21,6 +21,7 @@ function Pacientes() {
     const { logout } = useAuth();
 
     const [pacientes, setPacientes] = useState([]);
+    const [pacientesOriginais, setPacientesOriginais] = useState([]); // Para manter a lista completa
     const [form, setForm] = useState({
         id: null,
         nome: "",
@@ -43,7 +44,10 @@ function Pacientes() {
 
     const carregarPacientes = () => {
         api.get("/pacientes")
-            .then(res => setPacientes(res.data))
+            .then(res => {
+                setPacientes(res.data);
+                setPacientesOriginais(res.data); // Guarda lista completa
+            })
             .catch(() => {
                 setSnackbar({ open: true, message: "Erro ao carregar pacientes", severity: "error" });
                 logout(); // se token inválido, força logout
@@ -98,6 +102,20 @@ function Pacientes() {
 
     const formatarData = (data) => data ? new Date(data).toLocaleDateString("pt-BR") : "";
 
+    // 🔹 Função para filtrar pacientes no frontend
+    const pesquisarPacientes = () => {
+        const filtrados = pacientesOriginais.filter(p => {
+            return (
+                (!form.nome || p.nome.toLowerCase().includes(form.nome.toLowerCase())) &&
+                (!form.cpf || p.cpf.includes(form.cpf)) &&
+                (!form.email || (p.email && p.email.toLowerCase().includes(form.email.toLowerCase()))) &&
+                (!form.telefone || (p.telefone && p.telefone.includes(form.telefone))) &&
+                (!form.dataNascimento || p.dataNascimento?.split("T")[0] === form.dataNascimento)
+            );
+        });
+        setPacientes(filtrados);
+    };
+
     return (
         <Container sx={{ mt: 4 }}>
             <Typography variant="h4" gutterBottom>Pacientes</Typography>
@@ -131,6 +149,7 @@ function Pacientes() {
                         </Grid>
                         <Grid item xs={12} sm={12} sx={{ display: "flex", gap: 1, mt: 1 }}>
                             <Button variant="contained" color="primary" type="submit">{form.id ? "Atualizar" : "Cadastrar"}</Button>
+                            <Button variant="outlined" color="info" onClick={pesquisarPacientes}>Pesquisar</Button>
                             {form.id && <Button variant="outlined" color="secondary" onClick={resetForm}>Cancelar</Button>}
                         </Grid>
                     </Grid>

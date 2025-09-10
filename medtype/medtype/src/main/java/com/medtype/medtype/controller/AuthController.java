@@ -36,8 +36,8 @@ public class AuthController {
             );
 
             Usuario usuario = usuarioRepository.findByUsername(request.getUsername()).get();
-            String token = jwtUtil.generateToken(usuario.getUsername());
-            return new LoginResponse(token);
+            String token = jwtUtil.generateToken(usuario.getUsername(), usuario.getRole());
+            return new LoginResponse(token, usuario.getUsername(), usuario.getRole());
         } catch (AuthenticationException e) {
             throw new RuntimeException("Usuário ou senha inválidos");
         }
@@ -52,5 +52,7 @@ public class AuthController {
     @Data
     public static class LoginResponse {
         private final String token;
+        private final String username;
+        private final String role;
     }
 }
