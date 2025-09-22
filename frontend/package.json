@@ -3,21 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ckeditor/ckeditor5-adapter-ckfinder": "^46.0.3",
-    "@ckeditor/ckeditor5-basic-styles": "^46.0.3",
-    "@ckeditor/ckeditor5-block-quote": "^46.0.3",
-    "@ckeditor/ckeditor5-build-classic": "^36.0.1",
-    "@ckeditor/ckeditor5-code-block": "^46.0.3",
-    "@ckeditor/ckeditor5-essentials": "^46.0.3",
-    "@ckeditor/ckeditor5-font": "^46.0.3",
-    "@ckeditor/ckeditor5-heading": "^46.0.3",
-    "@ckeditor/ckeditor5-image": "^46.0.3",
-    "@ckeditor/ckeditor5-indent": "^46.0.3",
-    "@ckeditor/ckeditor5-link": "^46.0.3",
-    "@ckeditor/ckeditor5-list": "^46.0.3",
-    "@ckeditor/ckeditor5-paragraph": "^46.0.3",
-    "@ckeditor/ckeditor5-react": "^5.1.0",
-    "@ckeditor/ckeditor5-undo": "^46.0.3",
+    "@ckeditor/ckeditor5-basic-styles": "^46.1.0",
+    "@ckeditor/ckeditor5-block-quote": "^46.1.0",
+    "@ckeditor/ckeditor5-build-classic": "^41.4.2",
+    "@ckeditor/ckeditor5-code-block": "^46.1.0",
+    "@ckeditor/ckeditor5-editor-classic": "^46.1.0",
+    "@ckeditor/ckeditor5-essentials": "^46.1.0",
+    "@ckeditor/ckeditor5-font": "^46.1.0",
+    "@ckeditor/ckeditor5-heading": "^46.1.0",
+    "@ckeditor/ckeditor5-image": "^46.1.0",
+    "@ckeditor/ckeditor5-indent": "^46.1.0",
+    "@ckeditor/ckeditor5-link": "^46.1.0",
+    "@ckeditor/ckeditor5-list": "^46.1.0",
+    "@ckeditor/ckeditor5-paragraph": "^46.1.0",
+    "@ckeditor/ckeditor5-react": "^11.0.0",
+    "@ckeditor/ckeditor5-undo": "^46.1.0",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@mui/icons-material": "5.15.20",
@@ -52,5 +52,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^7.1.2",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^4.0.0"
   }
 }

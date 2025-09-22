@@ -10,14 +10,14 @@ import {
     TextField,
     Paper,
 } from "@mui/material";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import jsPDF from "jspdf";
 import api from "../services/api";
 import ConfirmDialog from "../components/ConfirmDialog";
 import NotificationSnackbar from "../components/NotificationSnackbar";
 
-// Função para remover tags HTML e caracteres estranhos
+// Função para remover tags HTML
 function stripHtml(html) {
     const tmp = document.createElement("DIV");
     tmp.innerHTML = html;
@@ -38,27 +38,18 @@ function Modelos() {
 
     const carregarModelos = () => api.get("/modelos").then(res => setModelos(res.data));
 
-    const handleChange = (e) => {
-        setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
-    };
+    const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             if (editando && form.id != null) {
-                await api.put(`/modelos/${form.id}`, {
-                    titulo: form.titulo,
-                    conteudo: form.conteudo
-                });
+                await api.put(`/modelos/${form.id}`, form);
                 setSnackbar({ open: true, message: "Modelo atualizado com sucesso!", severity: "success" });
             } else {
-                await api.post("/modelos", {
-                    titulo: form.titulo,
-                    conteudo: form.conteudo
-                });
+                await api.post("/modelos", form);
                 setSnackbar({ open: true, message: "Modelo cadastrado com sucesso!", severity: "success" });
             }
-
             resetForm();
             carregarModelos();
         } catch (error) {
@@ -81,8 +72,7 @@ function Modelos() {
     };
 
     const confirmarExclusao = () => {
-        api
-            .delete(`/modelos/${modeloIdParaExcluir}`)
+        api.delete(`/modelos/${modeloIdParaExcluir}`)
             .then(() => {
                 carregarModelos();
                 setSnackbar({ open: true, message: "Modelo excluído com sucesso!", severity: "success" });
@@ -116,14 +106,15 @@ function Modelos() {
                         onChange={handleChange}
                         fullWidth
                     />
+
                     <CKEditor
+                        key={form.id} // força recarregar ao editar
                         editor={ClassicEditor}
                         data={form.conteudo}
-                        onChange={(event, editor) => {
-                            const data = editor.getData();
-                            setForm(prev => ({ ...prev, conteudo: data }));
-                        }}
+                        onChange={(event, editor) => setForm({ ...form, conteudo: editor.getData() })}
                     />
+
+
                     <div>
                         <Button type="submit" variant="contained" color="primary">
                             {editando ? "Atualizar Modelo" : "Cadastrar Modelo"}
