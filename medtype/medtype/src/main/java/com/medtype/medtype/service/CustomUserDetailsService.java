@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(usuario.getUsername())
                 .password(usuario.getPassword()) // hash do banco
-                .authorities("USER") // ou "ADMIN" se quiser
+                .authorities(usuario.getRole()) // ou "ADMIN" se quiser
                 .build();
     }
 

@@ -17,7 +17,7 @@ import {
     Autocomplete
 } from "@mui/material";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import html2pdf from "html2pdf.js";
 import api from "../services/api";
 import ConfirmDialog from "../components/ConfirmDialog";
@@ -279,6 +279,7 @@ function Laudos() {
                         data={form.conteudo}
                         onChange={(event, editor) => setForm({ ...form, conteudo: editor.getData() })}
                     />
+
 
                     <FormControl fullWidth>
                         <InputLabel>Status</InputLabel>
