@@ -20,8 +20,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
         return org.springframework.security.core.userdetails.User
                 .withUsername(usuario.getUsername())
-                .password(usuario.getPassword()) // hash do banco
-                .authorities(usuario.getRole()) // ou "ADMIN" se quiser
+                .password(usuario.getPassword())
+                .authorities(usuario.getRole())
                 .build();
     }
 

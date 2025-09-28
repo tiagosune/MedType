@@ -29,10 +29,9 @@ function stripHtml(html) {
     return tmp.textContent || tmp.innerText || "";
 }
 
-// Função para formatar a data corretamente
 function formatarData(dataString) {
     if (!dataString) return "";
-    const data = new Date(dataString + "T00:00:00"); // evita deslocamento de fuso horário
+    const data = new Date(dataString + "T00:00:00");
     const dia = String(data.getDate()).padStart(2, "0");
     const mes = String(data.getMonth() + 1).padStart(2, "0");
     const ano = data.getFullYear();
@@ -58,7 +57,6 @@ function Laudos() {
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
     const [editando, setEditando] = useState(false);
 
-    // Carrega dados iniciais
     useEffect(() => {
         carregarLaudos();
         carregarPacientes();
@@ -188,20 +186,16 @@ function Laudos() {
             </div>
         </div>
 
-        <!-- Linha separadora -->
         <hr style="border:1px solid #000; margin-bottom:20px;">
 
-        <!-- Título centralizado -->
         <div style="text-align:center; font-weight:bold; font-size:16px; margin-bottom:20px;">
             ${laudo.modelo?.titulo || ""}
         </div>
 
-        <!-- Conteúdo do laudo alinhado à esquerda -->
         <div style="text-align:left; margin-left:0; margin-right:0;">
             ${laudo.conteudo || ""}
         </div>
 
-        <!-- Linha final opcional -->
         <hr style="border:1px solid #000; margin-top:20px;">
     `;
 
@@ -274,7 +268,7 @@ function Laudos() {
                     </FormControl>
 
                     <CKEditor
-                        key={form.id} // força recarregar ao editar
+                        key={form.id}
                         editor={ClassicEditor}
                         data={form.conteudo}
                         onChange={(event, editor) => setForm({ ...form, conteudo: editor.getData() })}

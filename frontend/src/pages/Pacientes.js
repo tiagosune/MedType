@@ -1,7 +1,7 @@
 import ConfirmDialog from "../components/ConfirmDialog";
 import NotificationSnackbar from "../components/NotificationSnackbar";
 import { useEffect, useState } from "react";
-import api from "../services/api.js"; // use o axios com interceptor JWT
+import api from "../services/api.js";
 import {
     Container,
     TextField,
@@ -15,7 +15,7 @@ import {
     Paper,
     Grid,
 } from "@mui/material";
-import { useAuth } from "../context/AuthContext"; // para logout
+import { useAuth } from "../context/AuthContext";
 
 function Pacientes() {
     const { logout } = useAuth();
@@ -46,11 +46,11 @@ function Pacientes() {
         api.get("/pacientes")
             .then(res => {
                 setPacientes(res.data);
-                setPacientesOriginais(res.data); // Guarda lista completa
+                setPacientesOriginais(res.data);
             })
             .catch(() => {
                 setSnackbar({ open: true, message: "Erro ao carregar pacientes", severity: "error" });
-                logout(); // se token inválido, força logout
+                logout(); // se token inválido força logout
             });
     };
 

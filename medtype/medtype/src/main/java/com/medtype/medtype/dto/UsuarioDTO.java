@@ -12,5 +12,5 @@ public class UsuarioDTO {
     @NotBlank(message = "A senha é obrigatória")
     private String password;
 
-    private String role; // ROLE_ADMIN, ROLE_USER
+    private String role;
 }

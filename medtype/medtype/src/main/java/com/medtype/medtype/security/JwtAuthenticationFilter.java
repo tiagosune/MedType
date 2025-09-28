@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             if (jwtUtil.isTokenValid(token)) {
-                // Extrair roles do token
+
                 List<SimpleGrantedAuthority> authorities = jwtUtil.getRoles(token).stream()
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());

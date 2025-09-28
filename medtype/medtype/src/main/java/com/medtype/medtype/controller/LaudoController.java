@@ -50,7 +50,6 @@ public class LaudoController {
         laudo.setPaciente(paciente);
         laudo.setAutor(autor);
 
-        // Data correta: usa a do frontend ou, se null, pega a de São Paulo
         LocalDate hojeSP = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
         laudo.setData(dto.getData() != null ? dto.getData() : hojeSP);
 
@@ -74,7 +73,6 @@ public class LaudoController {
         existente.setConteudo(dto.getConteudo());
         existente.setStatus(dto.getStatus());
 
-        // Mantém a data do frontend ou, se null, não altera a existente
         LocalDate hojeSP = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
         existente.setData(dto.getData() != null ? dto.getData() : existente.getData());
 

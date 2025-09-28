@@ -25,5 +25,5 @@ public class Laudo {
     @Column(columnDefinition = "TEXT")
     private String conteudo;
 
-    private String status; // exemplo: "Rascunho", "Finalizado"
+    private String status;
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/modelos")
-@CrossOrigin(origins = "http://localhost:3000") // libera acesso para frontend
+@CrossOrigin(origins = "http://localhost:3000")
 public class ModeloLaudoController {
 
     private final ModeloLaudoRepository modeloRepo;
@@ -37,7 +37,7 @@ public class ModeloLaudoController {
         ModeloLaudo existente = modeloRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Modelo não encontrado"));
 
-        // Só atualiza os campos editáveis
+
         existente.setTitulo(modelo.getTitulo());
         existente.setConteudo(modelo.getConteudo());
 

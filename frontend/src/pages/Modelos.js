@@ -17,7 +17,7 @@ import api from "../services/api";
 import ConfirmDialog from "../components/ConfirmDialog";
 import NotificationSnackbar from "../components/NotificationSnackbar";
 
-// Função para remover tags HTML
+// remover tags HTML do conteudo
 function stripHtml(html) {
     const tmp = document.createElement("DIV");
     tmp.innerHTML = html;
@@ -108,7 +108,7 @@ function Modelos() {
                     />
 
                     <CKEditor
-                        key={form.id} // força recarregar ao editar
+                        key={form.id}
                         editor={ClassicEditor}
                         data={form.conteudo}
                         onChange={(event, editor) => setForm({ ...form, conteudo: editor.getData() })}

@@ -33,7 +33,7 @@ public class UsuarioController {
     public Usuario criar(@RequestBody @Valid UsuarioDTO dto) {
         Usuario usuario = new Usuario();
         usuario.setUsername(dto.getUsername());
-        usuario.setPassword(passwordEncoder.encode(dto.getPassword())); // usar a instância injetada
+        usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
         usuario.setRole(dto.getRole() != null ? dto.getRole() : "ROLE_USER");
         return usuarioRepository.save(usuario);
     }
@@ -44,7 +44,6 @@ public class UsuarioController {
 
         usuario.setUsername(dto.getUsername());
 
-        // Só atualiza e criptografa a senha se o campo não estiver vazio
         if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
             usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
         }

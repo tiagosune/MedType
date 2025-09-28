@@ -17,19 +17,18 @@ public class PacienteController {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    // LISTAR todos os pacientes
+
     @GetMapping
     public List<Paciente> listar() {
         return pacienteRepository.findAll();
     }
 
-    // BUSCAR paciente por ID
+
     @GetMapping("/{id}")
     public Optional<Paciente> buscarPorId(@PathVariable Long id) {
         return pacienteRepository.findById(id);
     }
 
-    // CRIAR paciente
     @PostMapping
     public Paciente criar(@RequestBody @Valid PacienteDTO dto) {
         Paciente paciente = new Paciente();
@@ -55,8 +54,6 @@ public class PacienteController {
         return pacienteRepository.save(paciente);
     }
 
-
-    // DELETAR paciente
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         pacienteRepository.deleteById(id);

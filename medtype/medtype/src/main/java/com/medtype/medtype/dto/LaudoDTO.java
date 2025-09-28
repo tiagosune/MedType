@@ -19,5 +19,5 @@ public class LaudoDTO {
     @NotBlank(message = "O conteúdo do laudo não pode estar vazio")
     private String conteudo;
 
-    private String status; // Ex: "Rascunho", "Finalizado"
+    private String status;
 }

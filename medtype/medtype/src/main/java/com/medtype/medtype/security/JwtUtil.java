@@ -13,15 +13,11 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    // Chave secreta fixa (32 bytes mínimo para HS256)
     private static final String SECRET = "uma-chave-super-secreta-de-32-bytess";
     private static final Key KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
 
-    private static final long EXPIRATION = 60 * 60 * 1000; // 1 hora
+    private static final long EXPIRATION = 60 * 60 * 1000; // 1hora
 
-    /**
-     * Extrai claims do token
-     */
     public Claims getClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(KEY)
@@ -35,7 +31,6 @@ public class JwtUtil {
      */
     public List<String> getRoles(String token) {
         Claims claims = getClaims(token);
-        // Tenta recuperar "roles" (lista), se não houver, usa "role" (string) para compatibilidade
         Object rolesObj = claims.get("roles");
         if (rolesObj instanceof List<?>) {
             return (List<String>) rolesObj;
@@ -45,11 +40,7 @@ public class JwtUtil {
         return Collections.emptyList();
     }
 
-    /**
-     * Gera token JWT
-     */
     public String generateToken(String username, String role) {
-        // Sempre cria claim "roles" como lista; mantém "role" para compatibilidade
         return Jwts.builder()
                 .setSubject(username)
                 .claim("roles", List.of(role))
@@ -67,7 +58,6 @@ public class JwtUtil {
         try {
             return getClaims(token).getSubject();
         } catch (JwtException e) {
-            // Token inválido
             return null;
         }
     }
